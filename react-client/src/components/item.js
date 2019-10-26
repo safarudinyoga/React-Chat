@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import ReactMarkdown from 'react-markdown';
 
 function todayConvert(date) {
     let time = moment(date).format(' HH:mm');
@@ -24,7 +25,7 @@ function Item(props) {
                         </button>)}
                 </span>
             </div>
-            <p>{props.message}</p>
+            <p><ReactMarkdown source={props.message}/></p>
         </div>
     </li>
 }
