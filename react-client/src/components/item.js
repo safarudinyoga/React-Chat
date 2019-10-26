@@ -3,11 +3,12 @@ import moment from 'moment';
 
 function todayConvert(date) {
     let time = moment(date).format(' HH:mm');
-    date = moment(date).format('YYYY-MM-DD');
-    if (date === moment().format('YYYY-MM-DD'))
+    date = moment(date).format('DD-MM-YYYY');
+    if (date === moment().format('DD-MM-YYYY')){
         date = 'Today';
-    else if (date === moment().subtract(1, 'days').format('YYYY-MM-DD'))
+    } else if (date === moment().subtract(1, 'days').format('DD-MM-YYYY')){
         date = 'Yesterday';
+    }
     return (date + time);
 }
 
