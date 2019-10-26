@@ -75,6 +75,11 @@ body {
 
 /* Button */
 
+.text-red{
+    color: #f44336 !important;
+    font-size: 1.5vh;
+}
+
 .cover {
     padding: 0 1.5rem;
 }
