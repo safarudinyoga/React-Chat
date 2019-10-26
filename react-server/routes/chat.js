@@ -41,7 +41,7 @@ router.delete('/:id', (req, res, next) => {
   Todo.findOneAndRemove({ id }).then(data => {
     res.json({
       error: false,
-      data
+      itemDeleted: data
     })
   }).catch(err => {
     res.json({
