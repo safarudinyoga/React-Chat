@@ -1,0 +1,148 @@
+html, body {
+    height: 100%;
+    background-color: #333;
+    font-family: 'Ubuntu' !important;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+body {
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.cover-container {
+    max-width: 42em;
+}
+
+/* form {
+    background-color: #d9d9d959 !important;
+} */
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    padding-top: 0.75rem;
+    padding-right: 1.25rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1.25rem;
+    background-color: #f6f6f6 !important;
+    margin-bottom: 1px;
+    border: 1px solid ;
+}
+
+/* .card-body {
+    background-color: #d9d9d959 !important;
+} */
+
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+    color: #333;
+    text-shadow: none;
+    /* Prevent inheritance from `body` */
+    background-color: #fff;
+    border: .05rem solid #fff;
+}
+
+.speech-bubble {
+    position: relative;
+    background: #c9e5fb;
+    border-radius: .4em;
+    padding: 1%;
+    margin-left: 1.5vh;
+}
+
+.speech-bubble:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 13px solid transparent;
+    border-right-color: #c9e5fb;
+    border-left: 0;
+    margin-top: -13px;
+    margin-left: -13px;
+}
+
+/* Button */
+
+.cover {
+    padding: 0 1.5rem;
+}
+
+.cover .btn-lg {
+    padding: .75rem 1.25rem;
+    font-weight: 700;
+}
+
+.btn-circle {
+    /* background-color: #44c767; */
+    border-radius: 50%;
+    text-align: center;
+    padding: 0;
+    text-decoration: none;
+    line-height: 45px;
+    width: 45px;
+    height: 45px;
+    border: 2.5px solid #d6d6d6;
+}
+
+.btn-circle i {
+    position: relative;
+    top: 5px;
+}
+
+.btn-circle-lg {
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    font-size: 1.1rem;
+}
+
+.borderless {
+    border: 0;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 420px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.form-label-group>input, .form-label-group>label {
+    height: 3.125rem;
+    padding: .75rem;
+}
+
+.form-label-group>label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    /* Override default `<label>` margin */
+    line-height: 1.5;
+    color: #495057;
+    pointer-events: none;
+    cursor: text;
+    /* Match the input under the label */
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    transition: all .1s ease-in-out;
+}
