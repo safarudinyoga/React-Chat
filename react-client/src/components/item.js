@@ -19,7 +19,7 @@ function Item(props) {
                 <h5>{props.name}</h5>
                 <span>
                 {props.status ? todayConvert(props.id) :
-                        (<button className="btn text-white bg-transparent">resend chat <i className="fas fa-sync-alt "></i>
+                        (<button className="btn text-red bg-transparent" onClick={props.resendItem}>resend chat <i className="fas fa-sync-alt "></i>
                         </button>)}
                 </span>
             </div>
