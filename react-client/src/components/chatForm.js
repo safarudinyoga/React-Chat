@@ -37,10 +37,10 @@ export default class ChatForm extends React.Component {
                         className="fa fa-plus fa-2x"></i></button>
                     <div className="speech-bubble col-11">
                         <div className="form-label-group">
-                            <input type="text" name="name" className="form-control" placeholder="Name" value={this.state.name} onChange={this.handleChange} required={true} />
+                            <input type="text" name="name" className="form-control" placeholder="Name" value={this.state.name} autoFocus={true} onChange={this.handleChange} required={true} />
                         </div>
                         <div className="form-label-group my-0">
-                            <textarea name="message" className="form-control" placeholder="Type your message here ..." value={this.state.message} onChange={this.handleChange} required={true} />
+                            <textarea name="message" className="form-control" placeholder="Type your message here ..." value={this.state.message} autoFocus={true} onChange={this.handleChange} required={true} />
                         </div>
                     </div>
                 </li>
