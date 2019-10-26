@@ -2,22 +2,34 @@ import React from 'react';
 import ChatForm from './chatForm';
 import ChatItem from './chatItem';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
-const API_URL = 'http://localhost:3001/api/chat'
+const API_URL = 'http://localhost:3001/api/chat';
 
 export default class ChatBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = { data: [] };
+        this.autoScroll = null;
 
-        this.deleteTodo = this.deleteTodo.bind(this)
-        this.addTodo = this.addTodo.bind(this)
-        this.loadData = this.loadData.bind(this)
-        this.resendTodo = this.resendTodo.bind(this)
+        this.deleteTodo = this.deleteTodo.bind(this);
+        this.addTodo = this.addTodo.bind(this);
+        this.loadData = this.loadData.bind(this);
+        this.resendTodo = this.resendTodo.bind(this);
+        this.scrollToBottom = this.scrollToBottom.bind(this) 
     }
+
+    // componentDidMount() {
+    //     this.loadData()
+    // }
 
     componentDidMount() {
         this.loadData()
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate() {
+        this.scrollToBottom();
     }
 
     loadData() {
@@ -47,14 +59,48 @@ export default class ChatBox extends React.Component {
     }
 
     deleteTodo(id) {
-        // console.log(id);
-        this.setState((state, props) => ({
-            data: state.data.filter(data=> data.id !== id)
-        }));
-        axios.delete(API_URL + `/${id}`).then((response) => {
-            // return {...response.data.itemDeleted}
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if(result.value) {
+                this.setState((state) => ({
+                    data: state.data.filter(data => data.id !== id)
+                }));
+                axios.delete(API_URL + `/${id}`).then((response) => {
+                    Swal.fire({
+                        type: 'success',
+                        title: `Chat from ${response.data.itemDeleted.name} Deleted`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+            } else {
+                axios.delete(API_URL + `/${id}`).then((response) => {
+                Swal.fire({
+                    title: 'Cancelled',
+                    text: `Chat from ${response.data.itemDeleted.name} Forgiven!`,
+                    type: 'error'
+                })
+            })
+            }
         })
     }
+
+    // deleteTodo(id) {
+    //     // console.log(id);
+    //     this.setState((state, props) => ({
+    //         data: state.data.filter(data=> data.id !== id)
+    //     }));
+    //     axios.delete(API_URL + `/${id}`).then((response) => {
+    //         // return {...response.data.itemDeleted}
+    //     })
+    // }
 
     addTodo(name, message) { //name, message
         let id = Date.now()
@@ -75,15 +121,13 @@ export default class ChatBox extends React.Component {
                         return item
                     })
                 })
-                // this.setState((state, props) => ({
-                //     data: state.date.map((data => {
-                //         if (data.id === id) {
-                //             data.status = false
-                //         }
-                //         return data
-                //     }))
-                // }))
             });
+    }
+
+    scrollToBottom = () => {
+        if (this.autoScroll) {
+            this.autoScroll.scrollIntoView({ behavior: 'smooth' })
+        }
     }
 
     render() {
@@ -99,6 +143,8 @@ export default class ChatBox extends React.Component {
                             <ul className="list-group">
                                 <div className="scrollable" style={{ maxHeight: '40vh', overflowY: 'auto' }}>
                                     <ChatItem data={this.state.data} deleteTodo={this.deleteTodo} resendTodo={this.resendTodo} />
+                                <div ref={(event) => {this.autoScroll = event}}></div>
+                                <hr />
                                 </div>
                                 <ChatForm addTodo={this.addTodo} />
                             </ul>
