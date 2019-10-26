@@ -27,10 +27,10 @@ export default class ChatBox extends React.Component {
                 console.log("response >", response);
                 this.setState({
                     data: response.data.data.map(item => {
-                        return { ...item, status: true, send: true }
+                        return { ...item, status: true }
                     })
                 })
-                // console.log(response);
+                // console.log(data);
             })
             .catch((error) => {
                 // handle error
@@ -47,9 +47,13 @@ export default class ChatBox extends React.Component {
     }
 
     deleteTodo(id) {
+        // console.log(id);
         this.setState((state, props) => ({
-            data: state.data.filter((item, index) => item.id !== id)
+            data: state.data.filter(data=> data.id !== id)
         }));
+        axios.delete(API_URL + `/${id}`).then((response) => {
+            // return {...response.data.itemDeleted}
+        })
     }
 
     addTodo(name, message) { //name, message
@@ -59,16 +63,18 @@ export default class ChatBox extends React.Component {
         }));
         axios.post(API_URL, { id, name, message })
             .then((response) => {
-                let data = { ...response.data.itemAdded, status: true }
+                return { ...response.data.itemAdded, status: true }
             })
             .catch((error) => {
                 // console.log(error);
-                this.setState({data: this.state.data.map(item => {
-                    if (item.id === id) {
-                        item.status = false
-                    }
-                    return item
-                })}) 
+                this.setState({
+                    data: this.state.data.map(item => {
+                        if (item.id === id) {
+                            item.status = false
+                        }
+                        return item
+                    })
+                })
                 // this.setState((state, props) => ({
                 //     data: state.date.map((data => {
                 //         if (data.id === id) {
@@ -92,7 +98,7 @@ export default class ChatBox extends React.Component {
                         <div className="card-body">
                             <ul className="list-group">
                                 <div className="scrollable" style={{ maxHeight: '40vh', overflowY: 'auto' }}>
-                                    <ChatItem data={this.state.data} deleteTodo={this.deleteTodo} resendTodo={this.resendTodo}/>
+                                    <ChatItem data={this.state.data} deleteTodo={this.deleteTodo} resendTodo={this.resendTodo} />
                                 </div>
                                 <ChatForm addTodo={this.addTodo} />
                             </ul>
