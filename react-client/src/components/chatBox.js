@@ -13,6 +13,7 @@ export default class ChatBox extends React.Component {
         this.deleteTodo = this.deleteTodo.bind(this)
         this.addTodo = this.addTodo.bind(this)
         this.loadData = this.loadData.bind(this)
+        this.resendTodo = this.resendTodo.bind(this)
     }
 
     componentDidMount() {
@@ -26,11 +27,10 @@ export default class ChatBox extends React.Component {
                 console.log("response >", response);
                 this.setState({
                     data: response.data.data.map(item => {
-                        item.sent = true;
-                        return { ...item, status: true }
+                        return { ...item, status: true, send: true }
                     })
                 })
-                console.log(response);
+                // console.log(response);
             })
             .catch((error) => {
                 // handle error
@@ -41,9 +41,14 @@ export default class ChatBox extends React.Component {
             });
     }
 
+    resendTodo(id, name, message) {
+        this.deleteTodo(id)
+        this.addTodo(name, message)
+    }
+
     deleteTodo(id) {
         this.setState((state, props) => ({
-            data: state.data.filter((item, index) => index !== id)
+            data: state.data.filter((item, index) => item.id !== id)
         }));
     }
 
@@ -56,16 +61,22 @@ export default class ChatBox extends React.Component {
             .then((response) => {
                 let data = { ...response.data.itemAdded, status: true }
             })
-            .catch(function (error) {
+            .catch((error) => {
                 // console.log(error);
-                this.setState((state, props) => ({
-                    data: state.date.map((data => {
-                        if (data.id === id) {
-                            data.status = false
-                        }
-                        return data
-                    }))
-                }))
+                this.setState({data: this.state.data.map(item => {
+                    if (item.id === id) {
+                        item.status = false
+                    }
+                    return item
+                })}) 
+                // this.setState((state, props) => ({
+                //     data: state.date.map((data => {
+                //         if (data.id === id) {
+                //             data.status = false
+                //         }
+                //         return data
+                //     }))
+                // }))
             });
     }
 
@@ -81,7 +92,7 @@ export default class ChatBox extends React.Component {
                         <div className="card-body">
                             <ul className="list-group">
                                 <div className="scrollable" style={{ maxHeight: '40vh', overflowY: 'auto' }}>
-                                    <ChatItem data={this.state.data} deleteTodo={this.deleteTodo} />
+                                    <ChatItem data={this.state.data} deleteTodo={this.deleteTodo} resendTodo={this.resendTodo}/>
                                 </div>
                                 <ChatForm addTodo={this.addTodo} />
                             </ul>
