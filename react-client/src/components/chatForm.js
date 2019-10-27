@@ -30,11 +30,19 @@ export default class ChatForm extends React.Component {
         })
     }
 
+    // (Shift+Enter = newLine || Enter = Submit & Someone Who Typing)
     handleKey(event) {
         if(event.keyCode === 13 && !event.shiftKey){
             event.preventDefault()
             let button = document.getElementById('buttonsubmit');
             button.click();
+        } else {
+            let {name , message} = this.state
+            if(message.length > 0) {
+                name.length > 0 ? this.props.setTyper(name) : this.props.setTyper('unknown')
+            } else {
+                this.props.setTyper('')
+            }
         }
     }
 
