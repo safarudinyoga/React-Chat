@@ -61,6 +61,10 @@ io.on('connection', function (socket) {
   socket.on('typing', (typer) => {
     socket.broadcast.emit('typing', typer);
   });
+
+  socket.on('stoptyping', (typer) => {
+    socket.broadcast.emit('stoptyping', typer);
+  });
 })
 /**
  * Listen on provided port, on all network interfaces.
