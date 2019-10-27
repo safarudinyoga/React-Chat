@@ -9,6 +9,8 @@ function todayConvert(date) {
         date = 'Today';
     } else if (date === moment().subtract(1, 'days').format('DD-MM-YYYY')){
         date = 'Yesterday';
+    } else {
+        date = moment().format('LL')
     }
     return (date + time);
 }
