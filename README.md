@@ -12,4 +12,8 @@
 * Library Markdown for Chat
 * Alert Delete Message Option
 * (Shift + Enter) for Adding new line of Chat & (Enter) for submiting Chat
-* Socket.io for Real-Time Chatting
+* Show a text Someone Who 'Typing'
+* Socket.io for Real-Time Chatting :
+  * BroadCasting every new Chat
+  * BroadCasting DeletedChat
+  * BroadCasting Someone Who Typing
