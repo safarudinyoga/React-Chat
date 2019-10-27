@@ -43,7 +43,25 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
 
+io.on('connection', function (socket) {
+  // console.log('a user connected')
+  // socket.on('addchat', (data) => {
+  //   socket.broadcast.emit('loadchat');
+  // });
+  socket.on('addchat', (data={}) => {
+    socket.broadcast.emit('loadchat',data);  // broadcast ke semua client
+  });
+
+  socket.on('deletechat', (data={}) => {
+    socket.broadcast.emit('loadchat',data);  // broadcast ke semua client
+  });
+
+  socket.on('typing', (typer) => {
+    socket.broadcast.emit('typing', typer);
+  });
+})
 /**
  * Listen on provided port, on all network interfaces.
  */
