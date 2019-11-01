@@ -24,22 +24,12 @@ export default class ChatBox extends React.Component {
         this.typingChat = this.typingChat.bind(this);
     }
 
-    // componentDidMount() {
-    //     this.loadData()
-    // }
-
-    // componentDidMount() {
-    //     this.loadData()
-    //     this.scrollToBottom();
-    // }
-
     componentDidMount() {
         this.loadData()
         this.scrollToBottom();
 
         socket.on('loadchat', (data) => {
             this.loadData()
-            // this.setState((state) => ({ data: [...state.data, data] }));
         })
 
         socket.on('typing', (typer) => {
@@ -55,7 +45,6 @@ export default class ChatBox extends React.Component {
         })
 
         socket.on('deletechat', (id) => {
-            // this.deleteTodo()
             this.setState(state => ({
                 data: state.data.filter(data => data.id !== id)
             }));
@@ -69,18 +58,15 @@ export default class ChatBox extends React.Component {
     loadData() {
         axios.get(API_URL)
             .then((response) => {
-                // handle success
-                // console.log("response >", response);
                 this.setState({
                     data: response.data.data.map(item => {
                         return { ...item, status: true }
                     })
                 })
-                // console.log(data);
             })
             .catch((error) => {
                 // handle error
-                console.log(error);
+                // console.log(error);
             })
             .finally(function () {
                 // always executed
@@ -116,10 +102,11 @@ export default class ChatBox extends React.Component {
                     })
                 })
             } else {
-                axios.delete(API_URL + `/${id}`).then((response) => {
+                // axios.delete(API_URL + `/${id}`).then((response) => {
+                    axios.get(API_URL).then((response) => {
                     Swal.fire({
                         title: 'Cancelled',
-                        text: `Chat from ${response.data.itemDeleted.name} Forgiven!`,
+                        text: `Chat is Forgiven!`,
                         type: 'error'
                     })
                 })
@@ -128,12 +115,10 @@ export default class ChatBox extends React.Component {
     }
 
     resendDelete(id) {
-        // console.log(id);
         this.setState((state, props) => ({
             data: state.data.filter(data => data.id !== id)
         }));
         axios.delete(API_URL + `/${id}`).then((response) => {
-            // return {...response.data.itemDeleted}
         })
     }
 
